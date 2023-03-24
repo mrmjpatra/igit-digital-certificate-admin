@@ -1,0 +1,30 @@
+.add__documents__container{
+    height: 100vh;
+    background-color: whitesmoke;
+    padding: 1rem 2rem
+}
+.form__container{
+    width: 50%;
+    margin: auto;
+    padding: 2rem;
+    background-color: white;
+   
+}
+.form__container form{
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 1.2rem;
+}
+.image__upload{
+    position: relative;
+}
+.preview__image{
+    position: absolute;
+    right: 4px;
+    bottom: 2px;
+}
+.preview__image img{
+    width: 6rem;
+    height: 6rem;
+}

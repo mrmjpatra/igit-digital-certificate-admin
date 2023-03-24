@@ -1,24 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import Home from './pages/Home/Home';
+import UploadCertificate from './pages/UploadCertificate/UploadCertificate';
+import DocumentsThumbnail from './pages/DocumentsThumbnail';
+import LibraryComponent from './pages/DeparmentWisePage/LIibrary/LibraryComponent';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Home/>}>
+              <Route path='/' element={<LibraryComponent/>}/>
+              <Route path='add' element={<DocumentsThumbnail/>}/>
+              <Route path='upload' element={<UploadCertificate/>}/>
+            </Route>
+          </Routes>
+      </BrowserRouter>
     </div>
   );
 }
