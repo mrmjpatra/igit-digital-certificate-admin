@@ -3,6 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Button, TextField, Typog
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { FireStoreDb } from '../../../firebase/FireStoreDb/FireStoreDb';
+import { useAppSelector } from '../../../state/hooks';
 import AllowRejectComponent from './AllowRejectComponent';
 
 export interface IUserDetails {
@@ -23,20 +24,20 @@ interface applyCertFormType {
     hostelName?: string,
     dept: string
 }
-interface IClearance {
+export interface IClearance {
     library: {
-        clerance: boolean;
+        clearance: boolean;
         remarkStatus: boolean;
         remark: string;
     };
     hostel: {
         formData: applyCertFormType;
-        clerance: boolean;
+        clearance: boolean;
         remarkStatus: boolean;
         remark: string;
     };
     branchdept: {
-        clerance: boolean;
+        clearance: boolean;
         remarkStatus: boolean;
         remark: string;
     };
@@ -53,6 +54,8 @@ export interface IAllUserData extends IUserDetails, fieldType {
 
 const LibraryComponent = () => {
     const [allUserDetails, setAllUserDetails] = useState<IAllUserData[]>([]);
+    const [selectedUser, setSelectedUser] = useState<IAllUserData | null>(null);
+    const adminType = useAppSelector(state => state.admin.adminType);
     const [show, setShow] = useState(false);
     const fetchAllUsers = async () => {
         const users = new FireStoreDb('Users');
@@ -60,8 +63,9 @@ const LibraryComponent = () => {
         const pendingStudentList = allUsers.filter(user => user.apply === true);
         setAllUserDetails(pendingStudentList);
     }
-    const handelAllowRejectComponent = (user: IUserDetails) => {
+    const handelAllowRejectComponent = (user: IAllUserData) => {
         setShow(true);
+        setSelectedUser(user);
     }
     useEffect(() => {
         fetchAllUsers();
@@ -69,10 +73,11 @@ const LibraryComponent = () => {
     return (
         <LibraryComponentContainer>
             <StudentDetailsContainer>
+                <h1> {adminType.toUpperCase()} ADMIN PANNEL</h1>
                 {
                     allUserDetails.map(user => {
                         return (
-                            <Accordion>
+                            <Accordion key={user.emailId} >
                                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMore />} >
                                     <Typography>{user.name}</Typography>
                                 </AccordionSummary>
@@ -133,7 +138,9 @@ const LibraryComponent = () => {
                 }
             </StudentDetailsContainer>
             <ResponseContainer style={{ display: show ? 'block' : 'none' }} >
-                <AllowRejectComponent />
+                {
+                    selectedUser && <AllowRejectComponent user={selectedUser} />
+                }
             </ResponseContainer>
         </LibraryComponentContainer>
     )
@@ -148,6 +155,10 @@ const LibraryComponentContainer = styled.div`
 `;
 const StudentDetailsContainer = styled.div`
     padding: 1rem 2rem;
+    h1{
+        margin: .5rem 0;
+        text-align: center;
+    }
         dl.user__details{
             padding: 1rem;
             display: grid;

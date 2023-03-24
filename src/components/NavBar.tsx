@@ -1,10 +1,13 @@
 import { Avatar, Box, IconButton, Menu, MenuItem, Paper, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { removeAdminLogin } from '../state/Admin/admin-slice';
+import { useAppDispatch } from '../state/hooks';
 
 const NavBar = () => {
-   
+    const dispatch=useAppDispatch();
+    const navigate=useNavigate();
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -12,6 +15,10 @@ const NavBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    const handelLogOut=()=>{
+        dispatch(removeAdminLogin());
+        navigate('/');
+    }
     
     return (
         <div>
@@ -56,6 +63,7 @@ const NavBar = () => {
                             </MenuItem>
                             <MenuItem onClick={()=>{
                                 handleCloseUserMenu();
+                                handelLogOut();
                             }
                             }>
                                 <Typography textAlign="center"  >Log Out</Typography>

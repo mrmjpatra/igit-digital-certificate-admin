@@ -5,17 +5,22 @@ import Home from './pages/Home/Home';
 import UploadCertificate from './pages/UploadCertificate/UploadCertificate';
 import DocumentsThumbnail from './pages/DocumentsThumbnail';
 import LibraryComponent from './pages/DeparmentWisePage/LIibrary/LibraryComponent';
+import ProtectedRoute from './utils/ProtectedRoute';
+import AdminLogin from './pages/AdminLogin/AdminLogin';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Home/>}>
-              <Route path='/' element={<LibraryComponent/>}/>
-              <Route path='add' element={<DocumentsThumbnail/>}/>
-              <Route path='upload' element={<UploadCertificate/>}/>
+            <Route element={<ProtectedRoute/>}>
+              <Route path='/home' element={<Home/>}>
+                <Route path='' element={<LibraryComponent/>}/>
+                <Route path='add' element={<DocumentsThumbnail/>}/>
+                <Route path='upload' element={<UploadCertificate/>}/>
+              </Route>
             </Route>
+            <Route path='/' element={<AdminLogin/>} />
           </Routes>
       </BrowserRouter>
     </div>

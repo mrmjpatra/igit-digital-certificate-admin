@@ -14,24 +14,24 @@ export const MenuListItem:MenuItemType[]=[
         id:1,
         menuName:'Home',
         icon:Home,
-        link:'/'
+        link:'/home'
     },
     {
         id:2,
         menuName:'Add Thumbnail',
         icon:DocumentScannerOutlined,
-        link:'/add'
+        link:'/home/add'
     },
     {
         id:3,
         menuName:'Upload Certificates',
         icon:FileUpload,
-        link:'/upload'
+        link:'/home/upload'
     },
     {
         id:4,
         menuName:'Pending Document',
         icon:Info,
-        link:'/pending'
+        link:'/home/pending'
     },
 ]
