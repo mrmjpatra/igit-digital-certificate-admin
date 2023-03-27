@@ -1,7 +1,7 @@
-import { addDoc, collection, CollectionReference, doc, DocumentData, getDocs, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, CollectionReference, doc, DocumentData, DocumentReference, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { IAllUserData } from '../../pages/DeparmentWisePage/LIibrary/LibraryComponent';
 import { thumbnailType } from '../../pages/DocumentsThumbnail';
-import { formDetailsType } from '../../pages/UploadCertificate/UploadCertificate';
+import { formDetailsType, IUploadedCertificate } from '../../pages/UploadCertificate/UploadCertificate';
 import { firestoredb } from '../firebase-config';
 
 
@@ -12,15 +12,23 @@ export class FireStoreDb {
         this.collectionName = collectionName;
         this.collectionRef = collection(firestoredb, this.collectionName);
     }
-    async uploadFormDetails(formDetails: formDetailsType) {
+    async uploadFormDetails(uploadCert: IUploadedCertificate) {
         try {
-            await addDoc(this.collectionRef, formDetails);
+            const userDocRef = doc(this.collectionRef, uploadCert.regdNumber);
+            await setDoc(userDocRef, uploadCert);
         } catch (error) {
             console.log("Error while uploading details", error);
             throw error;
         }
     }
-
+    getUserDocRef(userId: string): DocumentReference<DocumentData> {
+        return doc(this.collectionRef, userId);
+    }
+    async readUploadedCertificateData(regdNumber: string): Promise<IUploadedCertificate> {
+        const userDocRef = this.getUserDocRef(regdNumber);
+        const snapshot = await getDoc(userDocRef);
+        return snapshot.data() as IUploadedCertificate;
+    }
     async uploadCertificateThubmbnail(thumbnail: thumbnailType) {
         try {
             await addDoc(this.collectionRef, thumbnail);
@@ -46,4 +54,9 @@ export class FireStoreDb {
             console.error(`Error updating field '${fieldName}' in document '${userEmail}': `, error);
         }
     }
+
+    
+
+
+
 }

@@ -1,9 +1,12 @@
 .add__documents__container{
+    
     height: 100vh;
     background-color: whitesmoke;
     padding: 1rem 2rem
 }
 .form__container{
+    box-shadow: 5px 5px 15px rgb(169, 169, 169);
+    border-radius: 1rem;
     width: 50%;
     margin: auto;
     padding: 2rem;

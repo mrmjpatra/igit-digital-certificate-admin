@@ -7,7 +7,6 @@ import { IAllUserData, IClearance } from './LibraryComponent';
 interface IAllowRejectComponentProps {
     user: IAllUserData;
 }
-
 const AllowRejectComponent = ({ user }: IAllowRejectComponentProps) => {
     const { emailId, clearance } = user;
     const adminType: string = useAppSelector(state => state.admin.adminType);
@@ -40,11 +39,10 @@ const AllowRejectComponent = ({ user }: IAllowRejectComponentProps) => {
                 }
             }
         }
-        console.log(updatedClearanceList);
         users.updateField(emailId, "clearance", updatedClearanceList);
     }
     return (
-        <div>
+        <React.Fragment>
             <Stack spacing={2} >
                 <FormGroup>
                     <FormControlLabel control={<Switch checked={giveClearance} onChange={(e: ChangeEvent<HTMLInputElement>) => setgiveClearance(e.target.checked)} />} label="Clearance" />
@@ -57,7 +55,7 @@ const AllowRejectComponent = ({ user }: IAllowRejectComponentProps) => {
                 </FormGroup>
                 <Button variant='contained' onClick={handleVerify}>Submit</Button>
             </Stack>
-        </div>
+        </React.Fragment>
     )
 }
 
