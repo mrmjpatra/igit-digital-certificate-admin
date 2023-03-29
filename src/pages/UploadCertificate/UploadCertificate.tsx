@@ -1,5 +1,5 @@
 import { Button, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField, Typography } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { FirebaseStorage } from '../../firebase/CloudStorage/FirebaseStorage';
 import { FireStoreDb } from '../../firebase/FireStoreDb/FireStoreDb';
 import './uploadCertificate.css';
@@ -50,7 +50,7 @@ const UploadCertificate = () => {
     setBranch(event.target.value);
   };
   const handleSemester = (event: SelectChangeEvent) => {
-    setSemester((event.target.value).toLowerCase());
+    setSemester(event.target.value);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -159,11 +159,11 @@ const UploadCertificate = () => {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={semester}
-                  label="Age"
+                  label="Semester"
                   onChange={handleSemester}
                 >
                   {
-                    semesterList[branch as keyof typeof semesterList]?.map((b, index) => <MenuItem key={index} value={b}>{b}</MenuItem>)
+                    semesterList[branch as keyof typeof semesterList]?.map((b, index) => <MenuItem key={index} value={b.toLowerCase()}>{b}</MenuItem>)
                   }
                 </Select>
               </FormControl>
