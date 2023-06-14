@@ -1,10 +1,20 @@
-import { addDoc, collection, CollectionReference, doc, DocumentData, DocumentReference, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, CollectionReference, doc, DocumentData, DocumentReference, getDoc, getDocs, setDoc, updateDoc, writeBatch } from 'firebase/firestore';
 import { IAllUserData } from '../../pages/DeparmentWisePage/LIibrary/LibraryComponent';
 import { thumbnailType } from '../../pages/DocumentsThumbnail';
 import { formDetailsType, IUploadedCertificate } from '../../pages/UploadCertificate/UploadCertificate';
 import { firestoredb } from '../firebase-config';
 
+type studentMarkshet = {
+    name: string,
+    regdNumber: string,
+    rollNumber: string,
+    marks: []
+}
 
+type marksheetData={
+    subjects:[],
+    markList: studentMarkshet[]
+}
 export class FireStoreDb {
     private collectionName: string;
     private collectionRef: CollectionReference<DocumentData>;
@@ -55,8 +65,37 @@ export class FireStoreDb {
         }
     }
 
-    
+    //marksheet
+    public async storeData(data: any,branch:string): Promise<void> {
+        try {
 
+            const itemObject: studentMarkshet[] = [];
+            const [subjects]=[data[0].slice(3,)]
 
+            for (const innerArray of data) {
+                if (innerArray[0] === "studentName") {
+                    continue
+                } else {
+                    const [name, regdNumber, rollNumber, ...marks] = innerArray;
+                    const item = {
+                        name,
+                        regdNumber,
+                        rollNumber,
+                        marks: marks.map(Number)
+                    };
+                    itemObject.push(item);
 
+                }
+            }
+            const marksheetData:marksheetData={
+                subjects: (subjects), // Convert subjects array to a string
+                markList: itemObject
+            }
+            const docRef = doc(this.collectionRef, branch);
+            await setDoc(docRef, { data: marksheetData });
+            console.log('Data saved to Firestore');
+        } catch (error) {
+            console.error('Error saving data to Firestore', error);
+        }
+    }
 }

@@ -7,6 +7,7 @@ import DocumentsThumbnail from './pages/DocumentsThumbnail';
 import LibraryComponent from './pages/DeparmentWisePage/LIibrary/LibraryComponent';
 import ProtectedRoute from './utils/ProtectedRoute';
 import AdminLogin from './pages/AdminLogin/AdminLogin';
+import Marksheet from './UploadMarksheet/Marksheet';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path='' element={<LibraryComponent/>}/>
                 <Route path='add' element={<DocumentsThumbnail/>}/>
                 <Route path='upload' element={<UploadCertificate/>}/>
+                <Route path='marksheet' element={<Marksheet/>}/>
               </Route>
             </Route>
             <Route path='/' element={<AdminLogin/>} />

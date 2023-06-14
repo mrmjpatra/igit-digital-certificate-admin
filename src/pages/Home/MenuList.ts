@@ -1,4 +1,4 @@
-import {Home,DocumentScannerOutlined,FileUpload,Info} from '@mui/icons-material'
+import {Home,DocumentScannerOutlined,FileUpload,Info, MarkAsUnreadSharp} from '@mui/icons-material'
 import SvgIcon from '@mui/material/SvgIcon';
 type SvgIconComponent = typeof SvgIcon;
 
@@ -33,5 +33,11 @@ export const MenuListItem:MenuItemType[]=[
         menuName:'Pending Document',
         icon:Info,
         link:'/home/pending'
+    },
+    {
+        id:5,
+        menuName:'Marksheets Upload',
+        icon:MarkAsUnreadSharp,
+        link:'/home/marksheet'
     },
 ]
